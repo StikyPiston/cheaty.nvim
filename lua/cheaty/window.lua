@@ -25,7 +25,7 @@ local function create_window(cfg)
 	local height = math.floor(vim.o.lines * cfg.height)
 
 	local row = math.floor((vim.o.lines - height) / 2)
-	local col = math.floor((vim.o.lines - width) / 2)
+	local col = math.floor((vim.o.columns - width) / 2)
 
 	win_id = vim.api.nvim_open_win(buf_id, true, {
 		relative = "editor",
