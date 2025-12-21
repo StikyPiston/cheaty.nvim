@@ -17,6 +17,10 @@ local function create_window(cfg)
 	buffer.swapfile   = false
 	buffer.filetype   = "markdown"
 
+	vim.api.nvim_buf_call(buf_id, function()
+		vim.cmd("doautocmd FileType markdown")
+	end)
+
 	local width = math.floor(vim.o.columns * cfg.width)
 	local height = math.floor(vim.o.lines * cfg.height)
 
