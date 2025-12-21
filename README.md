@@ -1,6 +1,6 @@
 # Cheaty.nvim
 
-**Cheaty.nvim** is a Neovim plugin that allows you to create a configurable pop-up cheatsheet!
+**Cheaty.nvim** allows you to create a configurable pop-up cheatsheet!
 
 ## Installation
 
@@ -14,7 +14,7 @@ vim.pack.add({
 
 ## Configuration
 
-You can write your cheatsheet in **markdown**, to have some nice formatting.
+You can write your cheatsheet in **Markdown**, to have some nice formatting.
 
 This is the default config, tweak it to your liking:
 
