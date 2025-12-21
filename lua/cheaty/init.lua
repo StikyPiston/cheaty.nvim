@@ -1,7 +1,7 @@
 local M = {}
 
 local defaults = {
-	keymap     = "<leader>?",
+	keymap     = "<leader>cs",
 	width      = 0.6,
 	height     = 0.6,
 	cheatsheet = { "This is a placeholder cheatsheet!", "Add your own in the config!" }
