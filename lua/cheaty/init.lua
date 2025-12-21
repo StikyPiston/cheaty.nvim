@@ -4,7 +4,7 @@ local defaults = {
 	keymap     = "<leader>cs",
 	width      = 0.6,
 	height     = 0.6,
-	cheatsheet = { "This is a placeholder cheatsheet!", "Add your own in the config!" }
+	cheatsheet = { "# This is a sample cheatsheet!", "Tailor it to your liking in the config!" }
 }
 
 M.config = {}
