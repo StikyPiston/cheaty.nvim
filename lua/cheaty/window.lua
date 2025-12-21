@@ -15,6 +15,7 @@ local function create_window(cfg)
 	buffer.bufhidden  = "wipe"
 	buffer.modifiable = false
 	buffer.swapfile   = false
+	buffer.filetype   = "markdown"
 
 	local width = math.floor(vim.o.columns * cfg.width)
 	local height = math.floor(vim.o.lines * cfg.height)
