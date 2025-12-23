@@ -37,6 +37,8 @@ function M.create_window(cfg)
 		style = "minimal",
 		border = "rounded",
 	})
+
+	vim.keymap.set("n", "q", M.close, { buffer = M.buf_id, noremap = true, silent = true })
 end
 
 function M.close()
