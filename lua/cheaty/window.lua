@@ -41,6 +41,10 @@ function M.create_window()
 		height = height,
 		style = "minimal",
 		border = "rounded",
+		title = "Cheatsheet",
+		title_pos = "center",
+		footer_pos = "center",
+		footer = "<q>: Close Window",
 	})
 
 	vim.keymap.set("n", "q", M.close, { buffer = M.buf_id, noremap = true, silent = true })
