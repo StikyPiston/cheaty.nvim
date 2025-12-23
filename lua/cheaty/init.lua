@@ -24,8 +24,10 @@ function M.setup(opts)
 			require("cheaty.window").toggle(M.config)
 		end, { desc = "Toggle cheaty.nvim cheatsheet" })
 	end
+
+	vim.api.nvim_create_user_command("Cheaty", function()
 		require("cheaty.window").toggle(M.config)
-	end, { desc = "Toggle cheaty.nvim cheatsheet" })
+	end, { desc = "Toggle the Cheaty Window" })
 end
 
 return M
