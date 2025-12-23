@@ -1,14 +1,21 @@
-local M = {}
-
+---@class Cheaty.Config
+---@field keymap? string
+---@field width? number
+---@field height? number
+---@field cheatsheet? string[]
 local defaults = {
-	keymap     = "<leader>cs",
-	width      = 0.6,
-	height     = 0.6,
-	cheatsheet = { "# This is a sample cheatsheet!", "Tailor it to your liking in the config!" }
+	keymap = "<leader>cs",
+	width = 0.6,
+	height = 0.6,
+	cheatsheet = { "# This is a sample cheatsheet!", "Tailor it to your liking in the config!" },
 }
 
-M.config = {}
+---@class Cheaty
+local M = {}
 
+M.config = {} ---@type Cheaty.Config
+
+---@param opts? Cheaty.Config
 function M.setup(opts)
 	M.config = vim.tbl_deep_extend("force", defaults, opts or {})
 

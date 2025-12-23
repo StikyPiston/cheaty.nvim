@@ -1,21 +1,23 @@
+---@class Cheaty.Window
 local M = {}
 
-local win_id = nil
-local buf_id = nil
+M.win_id = nil ---@type integer
+M.buf_id = nil ---@type integer
 
-local function create_window(cfg)
-	buf_id = vim.api.nvim_create_buf(false, true)
+---@param cfg Cheaty.Config
+function M.create_window(cfg)
+	M.buf_id = vim.api.nvim_create_buf(false, true)
 
-	vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, cfg.cheatsheet)
+	vim.api.nvim_buf_set_lines(M.buf_id, 0, -1, false, cfg.cheatsheet)
 
 	-- Buffer options
-	local buffer = vim.bo[buf_id]
+	local buffer = vim.bo[M.buf_id]
 
-	buffer.buftype    = "nofile"
-	buffer.bufhidden  = "wipe"
+	buffer.buftype = "nofile"
+	buffer.bufhidden = "wipe"
 	buffer.modifiable = false
-	buffer.swapfile   = false
-	buffer.filetype   = "markdown"
+	buffer.swapfile = false
+	buffer.filetype = "markdown"
 
 	vim.api.nvim_buf_call(buf_id, function()
 		vim.cmd("doautocmd FileType markdown")
@@ -26,33 +28,34 @@ local function create_window(cfg)
 
 	local row = math.floor((vim.o.lines - height) / 2)
 	local col = math.floor((vim.o.columns - width) / 2)
-
-	win_id = vim.api.nvim_open_win(buf_id, true, {
+	M.win_id = vim.api.nvim_open_win(M.buf_id, true, {
 		relative = "editor",
-		row      = row,
-		col      = col,
-		width    = width,
-		height   = height,
-		style    = "minimal",
-		border   = "rounded"
+		row = row,
+		col = col,
+		width = width,
+		height = height,
+		style = "minimal",
+		border = "rounded",
 	})
 end
 
 function M.close()
-	if win_id and vim.api.nvim_win_is_valid(win_id) then
-		vim.api.nvim_win_close(win_id, true)
+	if M.win_id and vim.api.nvim_win_is_valid(M.win_id) then
+		vim.api.nvim_win_close(M.win_id, true)
 	end
 
-	win_id = nil
-	buf_id = nil
+	M.win_id = nil
+	M.buf_id = nil
 end
 
+---@param cfg Cheaty.Config
 function M.toggle(cfg)
-	if win_id and vim.api.nvim_win_is_valid(win_id) then
+	if M.win_id and vim.api.nvim_win_is_valid(M.win_id) then
 		M.close()
-	else
-		create_window(cfg)
+		return
 	end
+
+	M.create_window(cfg)
 end
 
 return M
