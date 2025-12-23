@@ -19,14 +19,20 @@ M.config = {} ---@type Cheaty.Config
 function M.setup(opts)
 	M.config = vim.tbl_deep_extend("force", defaults, opts or {})
 
+	local cheaty_win = require("cheaty.window")
+	cheaty_win.config = vim.deepcopy(M.config)
+
 	if M.config.keymap and M.config.keymap ~= "" then
-		vim.keymap.set("n", M.config.keymap, function()
-			require("cheaty.window").toggle(M.config)
-		end, { desc = "Toggle cheaty.nvim cheatsheet" })
+		vim.keymap.set(
+			"n",
+			M.config.keymap,
+			cheaty_win.toggle,
+			{ desc = "Toggle cheaty.nvim cheatsheet" }
+		)
 	end
 
 	vim.api.nvim_create_user_command("Cheaty", function()
-		require("cheaty.window").toggle(M.config)
+		cheaty_win.toggle()
 	end, { desc = "Toggle the Cheaty Window" })
 end
 

@@ -1,14 +1,18 @@
 ---@class Cheaty.Window
+---@field config? Cheaty.Config
 local M = {}
 
 M.win_id = nil ---@type integer
 M.buf_id = nil ---@type integer
 
----@param cfg Cheaty.Config
-function M.create_window(cfg)
+function M.create_window()
+	if not M.config then
+		return
+	end
+
 	M.buf_id = vim.api.nvim_create_buf(false, true)
 
-	vim.api.nvim_buf_set_lines(M.buf_id, 0, -1, false, cfg.cheatsheet)
+	vim.api.nvim_buf_set_lines(M.buf_id, 0, -1, false, M.config.cheatsheet)
 
 	-- Buffer options
 	local buffer = vim.bo[M.buf_id]
@@ -24,8 +28,8 @@ function M.create_window(cfg)
 		vim.api.nvim_exec_autocmds("FileType", { pattern = "markdown" })
 	end)
 
-	local width = math.floor(vim.o.columns * cfg.width)
-	local height = math.floor(vim.o.lines * cfg.height)
+	local width = math.floor(vim.o.columns * M.config.width)
+	local height = math.floor(vim.o.lines * M.config.height)
 
 	local row = math.floor((vim.o.lines - height) / 2)
 	local col = math.floor((vim.o.columns - width) / 2)
@@ -51,14 +55,13 @@ function M.close()
 	M.buf_id = nil
 end
 
----@param cfg Cheaty.Config
-function M.toggle(cfg)
+function M.toggle()
 	if M.win_id and vim.api.nvim_win_is_valid(M.win_id) then
 		M.close()
 		return
 	end
 
-	M.create_window(cfg)
+	M.create_window()
 end
 
 return M
