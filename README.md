@@ -20,7 +20,6 @@ This is the default config, tweak it to your liking:
 
 ```lua
 require("cheaty").setup({
-    keymap = "<leader>cs",
     width  = 0.6,
     height = 0.6,
     cheatsheet = {
@@ -29,3 +28,5 @@ require("cheaty").setup({
     }
 })
 ```
+
+To invoke the cheatsheet, just run `:Cheaty`
