@@ -4,10 +4,9 @@
 ---@field height? number
 ---@field cheatsheet? string[]
 local defaults = {
-	keymap = "<leader>cs",
-	width = 0.6,
-	height = 0.6,
-	cheatsheet = { "# This is a sample cheatsheet!", "Tailor it to your liking in the config!" },
+	width      = 0.6,
+	height     = 0.6,
+	cheatsheet = { "# This is a sample cheatsheet!", "Tailor it to your liking in the config!" }
 }
 
 ---@class Cheaty
@@ -19,21 +18,11 @@ M.config = {} ---@type Cheaty.Config
 function M.setup(opts)
 	M.config = vim.tbl_deep_extend("force", defaults, opts or {})
 
-	local cheaty_win = require("cheaty.window")
-	cheaty_win.config = vim.deepcopy(M.config)
-
-	if M.config.keymap and M.config.keymap ~= "" then
-		vim.keymap.set(
-			"n",
-			M.config.keymap,
-			cheaty_win.toggle,
-			{ desc = "Toggle cheaty.nvim cheatsheet" }
-		)
-	end
-
-	vim.api.nvim_create_user_command("Cheaty", function()
-		cheaty_win.toggle()
-	end, { desc = "Toggle the Cheaty Window" })
+	vim.api.nvim_create_user_command(
+		'Cheaty',
+		function() require("cheaty.window").toggle(M.config) end,
+		{ desc = "Open Cheatsheet" }
+	)
 end
 
 return M
