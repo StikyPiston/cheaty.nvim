@@ -1,72 +1,58 @@
----@class Cheaty.Window
----@field config? Cheaty.Config
 local M = {}
 
-M.win_id = nil ---@type integer
-M.buf_id = nil ---@type integer
+local win_id = nil
+local buf_id = nil
 
-function M.create_window()
-	if not M.config then
-		return
-	end
+local function create_window(cfg)
+	buf_id = vim.api.nvim_create_buf(false, true)
 
-	M.buf_id = vim.api.nvim_create_buf(false, true)
-
-	vim.api.nvim_buf_set_lines(M.buf_id, 0, -1, false, M.config.cheatsheet)
+	vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, cfg.cheatsheet)
 
 	-- Buffer options
-	local buffer = vim.bo[M.buf_id]
+	local buffer = vim.bo[buf_id]
 
-	buffer.buftype = "nofile"
-	buffer.bufhidden = "wipe"
+	buffer.buftype    = "nofile"
+	buffer.bufhidden  = "wipe"
 	buffer.modifiable = false
-	buffer.swapfile = false
-	buffer.filetype = "markdown"
+	buffer.swapfile   = false
+	buffer.filetype   = "markdown"
 
-	vim.api.nvim_buf_call(M.buf_id, function()
-		-- vim.cmd("doautocmd FileType markdown")
-		vim.api.nvim_exec_autocmds("FileType", { pattern = "markdown" })
+	vim.api.nvim_buf_call(buf_id, function()
+		vim.cmd("doautocmd FileType markdown")
 	end)
 
-	local width = math.floor(vim.o.columns * M.config.width)
-	local height = math.floor(vim.o.lines * M.config.height)
+	local width = math.floor(vim.o.columns * cfg.width)
+	local height = math.floor(vim.o.lines * cfg.height)
 
 	local row = math.floor((vim.o.lines - height) / 2)
 	local col = math.floor((vim.o.columns - width) / 2)
-	M.win_id = vim.api.nvim_open_win(M.buf_id, true, {
-		relative = "editor",
-		row = row,
-		col = col,
-		width = width,
-		height = height,
-		style = "minimal",
-		border = "rounded",
-		title = "Cheatsheet",
-		title_pos = "center",
-		footer_pos = "center",
-		footer = "<q>: Close Window",
-	})
 
-	vim.keymap.set("n", "q", M.close, { buffer = M.buf_id, noremap = true, silent = true })
+	win_id = vim.api.nvim_open_win(buf_id, true, {
+		relative = "editor",
+		row      = row,
+		col      = col,
+		width    = width,
+		height   = height,
+		style    = "minimal",
+		border   = "rounded"
+	})
 end
 
 function M.close()
-	if M.win_id and vim.api.nvim_win_is_valid(M.win_id) then
-		vim.api.nvim_win_close(M.win_id, true)
+	if win_id and vim.api.nvim_win_is_valid(win_id) then
+		vim.api.nvim_win_close(win_id, true)
 	end
 
-	M.win_id = nil
-	M.buf_id = nil
+	win_id = nil
+	buf_id = nil
 end
 
-function M.toggle()
-	if M.win_id and vim.api.nvim_win_is_valid(M.win_id) then
+function M.toggle(cfg)
+	if win_id and vim.api.nvim_win_is_valid(win_id) then
 		M.close()
-		return
+	else
+		create_window(cfg)
 	end
-
-	M.create_window()
 end
 
 return M
--- vim: set ts=4 sts=4 sw=0 noet ai si sta:
