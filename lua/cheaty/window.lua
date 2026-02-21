@@ -94,7 +94,6 @@ function M.close()
 	pcall(vim.api.nvim_buf_delete, buf_id, { force = true })
 	pcall(vim.api.nvim_win_close, win_id, true)
 
-  timer = nil
   fd = nil
   stat = nil
 	win_id = nil
