@@ -13,6 +13,7 @@ local defaults = {
 	save_file  = vim.fs.joinpath(vim.fn.stdpath("data"), "cheaty.md"),
 	cheatsheet = { "# This is a sample cheatsheet!", "Tailor it to your liking in the config!" }
 }
+-- stylua: ignore end
 
 M.config = {} ---@type cheatyOpts
 
