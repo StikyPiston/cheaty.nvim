@@ -1,10 +1,12 @@
 local M = {}
 
+-- stylua: ignore start
 local defaults = {
 	width      = 0.6,
 	height     = 0.6,
 	cheatsheet = { "# This is a sample cheatsheet!", "Tailor it to your liking in the config!" }
 }
+-- stylua: ignore end
 
 M.config = {}
 
