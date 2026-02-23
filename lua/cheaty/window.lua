@@ -33,11 +33,7 @@ local function create_window(cfg)
 		uv.fs_close(fd)
 	end
 
-	buffer.buftype = "nofile"
-	buffer.bufhidden = "wipe"
-	buffer.modifiable = false
-	buffer.swapfile = false
-	buffer.filetype = "markdown"
+	vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, contents)
 
 	-- Buffer options
 	local opts = { buf = buf_id } ---@type vim.api.keyset.option
@@ -56,12 +52,37 @@ local function create_window(cfg)
 
 	win_id = vim.api.nvim_open_win(buf_id, true, {
 		relative = "editor",
+		noautocmd = false,
+		title = "Cheaty",
+		title_pos = "center",
 		row = row,
 		col = col,
 		width = width,
 		height = height,
 		style = "minimal",
 		border = "rounded",
+	})
+
+	vim.keymap.set('n', 'q', M.close, { buffer = buf_id })
+
+	local augroup = vim.api.nvim_create_augroup("cheaty", { clear = true })
+	vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+	  group = augroup,
+	  buffer = buf_id,
+	  callback = function()
+		  if not (buf_id and vim.api.nvim_buf_is_valid(buf_id)) then
+		    return
+		  end
+
+      open_file(cfg, "w")
+      if not fd then
+        return
+      end
+
+      local content = vim.api.nvim_buf_get_lines(buf_id, 0, -1, true)
+      uv.fs_write(fd, table.concat(content, "\n"))
+      uv.fs_close(fd)
+	  end,
 	})
 end
 
