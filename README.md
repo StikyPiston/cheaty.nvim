@@ -2,6 +2,8 @@
 
 **Cheaty.nvim** allows you to create a configurable pop-up cheatsheet!
 
+---
+
 ## Installation
 
 ### vim.pack
@@ -11,6 +13,17 @@ vim.pack.add({
     "https://github.com/stikypiston/cheaty.nvim"
 })
 ```
+
+### lazy.nvim
+
+```lua
+{
+    "stikypiston/cheaty.nvim",
+    opts = {},
+}
+```
+
+---
 
 ## Configuration
 
@@ -29,4 +42,4 @@ require("cheaty").setup({
 })
 ```
 
-To invoke the cheatsheet, just run `:Cheaty`
+To invoke the cheatsheet, just run `:Cheaty`.
