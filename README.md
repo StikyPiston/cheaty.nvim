@@ -24,7 +24,8 @@ require("cheaty").setup({
     height = 0.6,
     cheatsheet = {
         "# This is a sample cheatsheet!",
-        "Tailor it to your liking in the config!"
+        "Customise it by editing *this buffer* (just press `i`)",
+        "Or in the `cheatsheet` section of the config!"
     }
 })
 ```
