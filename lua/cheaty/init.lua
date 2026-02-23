@@ -55,7 +55,7 @@ function M.setup(opts)
 			end
 
 			if #args == 2 then
-			  return { "reset" }
+				return { "reset" }
 			end
 
 			return {}

@@ -10,7 +10,7 @@ local fd, stat = nil, nil ---@type integer|nil, uv.fs_stat.result|nil
 ---@param flags? uv.fs_open.flags
 ---@param reset? boolean
 local function open_file(cfg, flags, reset)
-  reset = reset ~= nil and reset or false
+	reset = reset ~= nil and reset or false
 
 	if not cfg.save_file or cfg.save_file == "" then
 		error("No valid path!", vim.log.levels.ERROR)
@@ -105,11 +105,11 @@ end
 
 ---@param cfg cheatyOpts
 function M.reset(cfg)
-  open_file(cfg, "r", true)
+	open_file(cfg, "r", true)
 
-  if fd then
-    uv.fs_close(fd)
-  end
+	if fd then
+		uv.fs_close(fd)
+	end
 end
 
 ---@param cfg cheatyOpts
