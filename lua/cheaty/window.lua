@@ -11,11 +11,11 @@ local function create_window(cfg)
 	-- Buffer options
 	local buffer = vim.bo[buf_id]
 
-	buffer.buftype    = "nofile"
-	buffer.bufhidden  = "wipe"
+	buffer.buftype = "nofile"
+	buffer.bufhidden = "wipe"
 	buffer.modifiable = false
-	buffer.swapfile   = false
-	buffer.filetype   = "markdown"
+	buffer.swapfile = false
+	buffer.filetype = "markdown"
 
 	vim.api.nvim_buf_call(buf_id, function()
 		vim.cmd("doautocmd FileType markdown")
@@ -29,12 +29,12 @@ local function create_window(cfg)
 
 	win_id = vim.api.nvim_open_win(buf_id, true, {
 		relative = "editor",
-		row      = row,
-		col      = col,
-		width    = width,
-		height   = height,
-		style    = "minimal",
-		border   = "rounded"
+		row = row,
+		col = col,
+		width = width,
+		height = height,
+		style = "minimal",
+		border = "rounded",
 	})
 end
 
