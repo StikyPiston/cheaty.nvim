@@ -8,12 +8,15 @@ local fd, stat = nil, nil ---@type integer|nil, uv.fs_stat.result|nil
 
 ---@param cfg cheatyOpts
 ---@param flags? uv.fs_open.flags
-local function open_file(cfg, flags)
+---@param reset? boolean
+local function open_file(cfg, flags, reset)
+	reset = reset ~= nil and reset or false
+
 	if not cfg.save_file or cfg.save_file == "" then
 		error("No valid path!", vim.log.levels.ERROR)
 	end
 
-	if vim.fn.filereadable(cfg.save_file) ~= 1 then
+	if vim.fn.filereadable(cfg.save_file) ~= 1 or reset then
 		vim.fn.writefile(cfg.cheatsheet or {}, cfg.save_file)
 	end
 
@@ -98,6 +101,15 @@ function M.close()
 	stat = nil
 	win_id = nil
 	buf_id = nil
+end
+
+---@param cfg cheatyOpts
+function M.reset(cfg)
+	open_file(cfg, "r", true)
+
+	if fd then
+		uv.fs_close(fd)
+	end
 end
 
 ---@param cfg cheatyOpts
