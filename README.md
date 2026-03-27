@@ -10,7 +10,7 @@
 
 ```lua
 vim.pack.add({
-    "https://github.com/stikypiston/cheaty.nvim"
+    "https://github.com/indium114/cheaty.nvim"
 })
 ```
 
@@ -18,7 +18,7 @@ vim.pack.add({
 
 ```lua
 {
-    "stikypiston/cheaty.nvim",
+    "indium114/cheaty.nvim",
     opts = {},
 }
 ```
